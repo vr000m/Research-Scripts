@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+# on shell you can also use: $> paste file1 file2 > output
+
 import sys
 import csv
     
@@ -12,6 +14,8 @@ def main(argv):
     #newname = argv[fn-1]
     #fn =fn-1
     fw = open('output.txt', 'w')
+    #to calculate the number of lines in the files, assuming they all have the same number
+    # alternative would be to use MAX(file1, file2)
     num_lines = sum(1 for line in open(argv[0]))
     try:
         i =0
