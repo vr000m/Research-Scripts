@@ -1,3 +1,5 @@
-ColConcat
-
-Simple script to concatenate my simulations results.
+colconcat.py: Simple script to concatenate my simulations results.
+perinst.awk: averaging time series data into 1s intervals
+\gnuplot\: Scripts to create plots (stacked multiplot, quad plots, stacked curves, etc)
+gstreamer.cli: command lines
+tcptrace.cli: tcpdump to tcptrace to gnuplot toolchain

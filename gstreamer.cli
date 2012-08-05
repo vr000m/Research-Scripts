@@ -1,0 +1,19 @@
+YUV -> MP4
+gst-launch filesrc location=<YUV file name> ! videoparse height=144 width=176 framerate=15 ! x264enc name=encoder byte-stream=true bitrate=64 ! mp4mux ! filesink location=<mp4 file name>
+
+gst-launch filesrc location=foreman15_600.yuv ! videoparse height=144 width=176 framerate=15 ! x264enc name=encoder byte-stream=true bitrate=64 ! rtph264pay name=packetiser ! fakesink
+
+MP4 -> YUV
+gst-launch filesrc location=<MP4 file name> ! qtdemux ! ffdec_h264 ! videoparse height=144 width=176 framerate=15  ! filesink locatiion=<YUV file name>
+----
+Stream MP4 file
+gst-launch filesrc location=IM2-YT-2_128k_20.mp4 ! qtdemux ! rtph264pay seqnum-offset=0 timestamp-offset=0 ssrc=0xaaaabbbb mtu=1450 perfect-rtptime=true ! udpsink clients=172.16.183.134:4400
+
+gst-launch-0.10 udpsrc port=4400 caps='application/x-rtp, media=(string)video, clock-rate=(int)90000, encoding-name=(string)H264, sprop-parameter-sets=(string)\"Z2QAHqw05gLQ9v/ACAAGxAAAAwAEAAADAKA8WLZo\\,aOl4RLIs\", payload=(int)96, ssrc=(uint)2863315899, clock-base=(uint)0, seqnum-base=(uint)0' ! .recv_rtp_sink_0 gstrtpbin ! rtph264depay ! ffdec_h264 ! ffmpegcolorspace ! videoscale ! autovideosink
+
+NOTE: Use -v at the end of sending side to see the file caps, which you can later use at the decoder side.
+
+---
+./psnr 176 144 foreman15_600.yuv foreman15_600_recreated.yuv 0 0 foreman_mprtp_old.rtp 15 > psnr_rec.txt
+---
+

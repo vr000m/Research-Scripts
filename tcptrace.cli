@@ -1,0 +1,24 @@
+----
+Tcpdump
+
+sudo tcpdump -nnvvS tcp and dst IP_ADDR or src IP_ADDR
+
+---
+TCPTrace
+tcptrace -G test-http.pcap 
+tcptrace -T test-http.pcap 
+tcptrace -T -A5 test-http.pcap 
+
+xplot f2e_tput.xpl 
+
+tcptrace -T -C -zxy -A10 test-http.pcap
+xplot -1 *.xpl 
+tcptrace -T -C -zxy -A1 test-http.pcap
+
+----
+Xplot to Gnuplot
+
+xpl2gpl -s f2e_tput.xpl 
+xpl2gpl f2e_tput.xpl 
+
+gnuplot f2e_tput.gpl 
