@@ -1,3 +1,8 @@
+#!/usr/bin/awk -f
+# col $2 is time
+# col $3 is payload_size
+# change $2 and $3 to match your column data
+# the output is tab separated {time, bitrate, pkt_count}
 BEGIN	{
 		n=0;
 		time=0.0;
