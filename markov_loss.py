@@ -13,18 +13,20 @@ def markov_loss(p,q):
     rand=random.uniform(0.0,1.0)
     #print rand
     if (PREV_MARKOV_STATE==1):
-        if (rand<p):
+        if (rand<=p):
             PREV_MARKOV_STATE = 0
             #packet lost
             return False
         else:
+            PREV_MARKOV_STATE=1
             #packet sent
             return True
     elif (PREV_MARKOV_STATE==0):
-        if (rand<q):
+        if (rand<=q):
             PREV_MARKOV_STATE = 1
             #packet sent
             return True
         else:
+            PREV_MARKOV_STATE=0
             #packet lost
             return False
