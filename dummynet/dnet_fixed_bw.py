@@ -10,7 +10,7 @@ import time
 import signal
 
 def signal_handler(signal, frame):
-  print 'shutting down Dummynet...'
+  # print 'shutting down Dummynet...'
   os.system("ipfw -f flush")
   sys.exit(0)
 
@@ -22,26 +22,28 @@ def main(argv):
   delay = sys.argv[2]
   bw = sys.argv[1]
   timeout = float(sys.argv[3])
+  plr = sys.argv[4]
 
   log_dir = "./logs/"
   try:
     os.makedirs(log_dir)
   except OSError:
-    print "Directory " + log_dir + " already exists"
+    variable_directory=True
+    # print "Directory " + log_dir + " already exists"
   g = open(log_dir+"dnet-fcap.txt","w")
   #print bw
   
   command = ""
   if (bw!="0kb"):
-    command = "ipfw pipe "+pipe_num+" config bw " + bw + " delay " + delay + "ms queue 10"
+    command = "ipfw pipe "+pipe_num+" config bw " + bw + " delay " + delay + "ms queue 10 " + "plr "+plr
   else:
     command = "ipfw pipe "+pipe_num+" config delay " + delay + "ms queue 10"
-  print 'Dummynet command: ' + command + "\n"
+  # print 'Dummynet command: ' + command + "\n"
   log = str(time.time()) + "\t" + str(bw) + "\n"
   g.write(log)
   os.system(command)
   time.sleep(timeout)
-  print "Dummynet finished"
+  # print "Dummynet finished"
   os.system("ipfw -f flush")
   g.close
   

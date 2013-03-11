@@ -21,6 +21,8 @@ def main(argv):
   add_pipe = "ipfw add pipe "+pipe_num+" ip from 127.0.0.1 to 127.0.0.1 in" #in/out
   os.system(add_pipe)
   delay = sys.argv[2]
+  plr = sys.argv[3]
+
   f = open(sys.argv[1])
   
   log_dir = "./logs/"
@@ -36,7 +38,7 @@ def main(argv):
     bw = data[0]
     print data
     timeout = float(data[1])
-    command = "ipfw pipe "+pipe_num+" config bw " + bw + " delay " + delay + "ms queue 10"
+    command = "ipfw pipe "+pipe_num+" config bw " + bw + " delay " + delay + "ms queue 10 " + "plr "+plr
     print 'Dummynet command: ' + command + "\n"
     log = str(time.time()) + "\t" + str(bw) + "\n"
     g.write(log)
