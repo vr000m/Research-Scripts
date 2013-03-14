@@ -1,4 +1,4 @@
-The python code in this directory are wrappers around dummynet for modifying link characteristics.
+The python code in this directory are wrappers around [dummynet](http://info.iet.unipi.it/~luigi/dummynet/) for modifying link characteristics.
 
 At the moment:
 * `dnet_fixed_bw.py` uses fixed values for throughput and network latency.
