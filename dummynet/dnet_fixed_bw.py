@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 '''
-Adapted from scripts by Marcin Nagy (2012)
+Adapted from scripts by Marcin Nagy (@marcinag, 2012)
 '''
 
 import os
