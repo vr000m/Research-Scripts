@@ -15,4 +15,4 @@
   from @marcinag)
 * `laf.py`: Simple script that goes through my thesis .tex files and looks for
   acronyms. It stores the acronyms in the `tex files` and compares with those
-  already listed in `list.tex` file.
+  already listed in `list.tex` file. Also ignores words listed in `abbr.ignore`

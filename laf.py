@@ -27,11 +27,22 @@ def print_list(_list):
 		print t
 
 def main(args):
+    # find tex files in the current directory and the sub directory
+    # using regex on find unix command
 	findCommand = 'find . -type f -iregex \'.*\.tex\' -print'
-	print "Command:", findCommand
+    # print "Command:", findCommand
 	texFiles = subprocess.check_output(findCommand, shell=True).split()
 	# print texFiles
 	# texFiles = filter(None, texFiles)
+	
+	# read words from abbr.ignore, these words will not be reported
+	ignoreList = []
+	k = file('accr.ignore').read()
+	for word in k.split():
+		ignoreList.append(word)
+	ignoreList.sort()
+	
+	# create list
 	inList = []
 	newList = []
 	for t in texFiles:
@@ -74,7 +85,7 @@ def main(args):
 	
 	#compare the lists and report missing and extra ones.
 	print "Consider adding these"
-	print_list(set(newList)-set(inList))
+	print_list(set(newList)-set(inList)-set(ignoreList))
 	print "\nConsider removing these: (not in use):"
 	print_list(set(inList)-set(newList))
 
