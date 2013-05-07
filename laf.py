@@ -1,25 +1,14 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-''' 
-I am writing my Ph.D. Thesis and I have to compile 
-a list of acronyms in from my text. Instead of scanning 
-through my text, this piece of code looks for them (*.tex).
-
-Most common acronyms are: ALL CAPS, or CamelCASE. 
-(at the moment there are no other variants: CamelCase)
-
-My thesis is structured in chapters, with each one in its
-corresponding tex file. All the acronyms are in their own 
-text file (e.g., lists.tex)
-'''
+# list acronyms in file (*.tex)
 import sys
 import os
 import subprocess
 import re
 
-camel_case 	= re.compile('(?:[A-Z])(?:[a-z])+(?:[A-Z])+') #e.g., WebRTC, QoS, QoE
-only_word	= re.compile("[^\w']")	# ignore alphaneumeric
+camel_case = re.compile('(?:[A-Z])(?:[a-z])+(?:[A-Z])+') #e.g., WebRTC, QoS, QoE
+only_word=re.compile("[^\w']")	# ignore alphaneumeric
 parantheses = re.compile("\((.*)\)") # (words)
 
 def print_list(_list):
@@ -49,7 +38,6 @@ def main(args):
 		print "Reading File:", t
 		f = file(t).read()
 		for word in f.split():
-			
 			# In latex some words are immediately followed by ~
 			# Typically for \cite{} or \ref{}
 			if (word.find('~')!=-1):
@@ -66,13 +54,14 @@ def main(args):
 				# print "parantheses", word
 			
 			# check if Word is uppercase
-			# check CamelCase
+			# check CamelCASE or CamelCase
 			if (word.isupper() or camel_case.match(word)!=None):
 				accr=only_word.sub('', word)
+				#acronyms are typically longer than a single letter.
 				if(len(accr)>1): 
 					# create list of acronyms already in list
-					# create list of acronyms in chapters 
-					if(t.find('lists')!=-1): #t=="lists.tex" 
+					# create list of acronyms in 
+					if(t.find('lists')!=-1): #t=="_0lists.tex" 
 						if accr not in inList:
 						    inList.append(accr)
 					else:
@@ -82,12 +71,10 @@ def main(args):
 	# print "newList: ", newList
 	inList.sort()
 	# print "inList: ", inList
-	
-	#compare the lists and report missing and extra ones.
 	print "Consider adding these"
 	print_list(set(newList)-set(inList)-set(ignoreList))
 	print "\nConsider removing these: (not in use):"
-	print_list(set(inList)-set(newList))
+	print_list(set(inList)-set(newList)-set(ignoreList))
 
 if __name__ == "__main__":
 	main(sys.argv[1:])
