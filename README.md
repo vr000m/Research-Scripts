@@ -16,3 +16,7 @@
 * `laf.py`: Simple script that goes through my thesis .tex files and looks for
   acronyms. It stores the acronyms in the `tex files` and compares with those
   already listed in `list.tex` file. Also ignores words listed in `abbr.ignore`
+* `cnt_http_dialog.py`: script looks for a defined `token` in the HTTP request
+  or response PCAP file. It parses out the URL, lists and counts their
+  occurrences in the file.
+  
