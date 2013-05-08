@@ -30,6 +30,9 @@ def main(args):
 	for word in k.split():
 		ignoreList.append(word)
 	ignoreList.sort()
+
+	# $acronym_file is the file which contains the current list of accronyms
+	acronym_file=""
 	
 	# create list
 	inList = []
@@ -61,7 +64,9 @@ def main(args):
 				if(len(accr)>1): 
 					# create list of acronyms already in list
 					# create list of acronyms in 
-					if(t.find('lists')!=-1): #t=="_0lists.tex" 
+					if(t.find('lists')!=-1): 
+						# $acronym_file is "_0lists.tex" 
+						acronym_file=t
 						if accr not in inList:
 						    inList.append(accr)
 					else:
@@ -75,6 +80,30 @@ def main(args):
 	print_list(set(newList)-set(inList)-set(ignoreList))
 	print "\nConsider removing these: (not in use):"
 	print_list(set(inList)-set(newList)-set(ignoreList))
+
+	# sorting and updating $acronym_file
+	texLine=[]
+	f = file(acronym_file).read()
+	for line in f.split('\n'):
+		texLine.append(line)
+
+	# print_list(texLine)
+	print acronym_file
+	
+	fTex = open(acronym_file, "w")
+	fTex.write("\\begin{longtable}{ll}\n")
+	for k in inList:
+		fnd =0
+		for line in texLine:
+			x = line.split('\t')
+			s=only_word.sub('', x[0])
+			if k==s:
+				fTex.write(line+"\n")
+				fnd =1
+		if fnd==0:
+			print "not found", k
+	fTex.write("\end{longtable}\n")
+	# print_list(inList)
 
 if __name__ == "__main__":
 	main(sys.argv[1:])
